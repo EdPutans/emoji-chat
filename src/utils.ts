@@ -9,3 +9,20 @@ const fireConfig = { // safe to display as per https://stackoverflow.com/questio
   measurementId: 'G-6QB9M17JVF',
 };
 export default fireConfig;
+
+const key = '67dd32f314a70f3b5a23509902dc4e5092e4dc7a';
+export const getEmojis = async () => {
+  const res = await fetch(`https://emoji-api.com/emojis?access_key=${key}`);
+  return res.json();
+};
+
+export const verySlowModifyMessageWithEmojis = (message, emojis) => {
+  const splitMessage = message.split(' ');
+  [...splitMessage].forEach((word, i) => {
+    const index = emojis.findIndex((emoji) => emoji.unicodeName === word || emoji.slug === word);
+    if (index && emojis[index]?.character) {
+      splitMessage[i] = emojis[index].character;
+    }
+  });
+  return splitMessage.join(' ');
+};

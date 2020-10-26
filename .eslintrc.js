@@ -34,10 +34,12 @@ module.exports = {
         }
     },
     "rules": {
+        "max-len": 0,
         "react/jsx-props-no-spreading": 0,
         "no-use-before-define": 0,
         "react/jsx-filename-extension": 0,
         "import/extensions": 0,
         "react/prop-types": 0,
+        '@typescript-eslint/no-explicit-any': 0
     }
 };

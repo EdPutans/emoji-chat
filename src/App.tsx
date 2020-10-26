@@ -6,7 +6,8 @@ import 'firebase/auth';
 import firebase from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import fireConfig from './utils';
+import Filter from 'bad-words';
+import fireConfig, { getEmojis, verySlowModifyMessageWithEmojis } from './utils';
 
 import './App.scss';
 import Chat from './Components/Chat/Chat';
@@ -14,6 +15,8 @@ import { MessageProp } from './Components/types';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import Button from './Components/Button/Button';
+
+const NaughtyFilter = new Filter();
 
 firebase.initializeApp(fireConfig);
 
@@ -24,18 +27,25 @@ const signIn = () => Auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()
 const signOut = () => Auth.signOut();
 
 const App:React.FC = () => {
-  const [user] = useAuthState(Auth);
-
   const messagesRef = firestore.collection('messages');
-  const [messages] = useCollectionData<MessageProp>(messagesRef.orderBy('createdAt'), {
+  const [messages] = useCollectionData<MessageProp>(messagesRef.orderBy('createdAt', 'desc').limit(30), {
     idField: 'id',
   });
-
+  const [user] = useAuthState(Auth);
+  const [emojis, setEmojis] = React.useState([]);
   const postMessage = (e, message, callback) => {
     e.preventDefault(); // <form /> is such a pos sometimes
 
+    let messageToSend;
+
+    if (NaughtyFilter.isProfane(message)) {
+      messageToSend = 'I tried to use naughty language but failed miserably';
+    } else {
+      messageToSend = verySlowModifyMessageWithEmojis(message, emojis);
+    }
+
     messagesRef.add({
-      message,
+      message: messageToSend,
       displayName: user?.displayName,
       userId: user?.uid,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -43,7 +53,11 @@ const App:React.FC = () => {
     }).then(callback);
   };
 
-  if (!messages) {
+  React.useEffect(() => {
+    getEmojis().then((r) => setEmojis(r));
+  }, []);
+
+  if (!messages || !emojis.length) {
     return <h1>loading...</h1>;
   }
 
@@ -54,7 +68,7 @@ const App:React.FC = () => {
         {user ? (
           <>
             <Header onSignOut={signOut} />
-            <Chat messages={messages} user={user} />
+            <Chat messages={messages.reverse()} user={user} />
             <Footer onSubmit={postMessage} />
           </>
         )
