@@ -6,6 +6,6 @@ It uses React on the front, Firebase to store messages, displays the most recent
 
 `yarn && yarn start` to set it up and get it running.
 
-Hosted on https://emoji-chat-ed-putans.netlify.app/
+Hosted on https://emoji-chat-6828e.web.app/
 
 Inspired by [this guy](https://www.youtube.com/watch?v=zQyrwxMPm88).
