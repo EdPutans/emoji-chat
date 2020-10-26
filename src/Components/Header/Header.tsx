@@ -14,7 +14,7 @@ const Header:FC<Props> = ({ onSignOut }) => {
     <div className="Header">
       <h2 style={{ color: 'gray' }}>Chat boi</h2>
       <div>
-        <Button onClick={() => setShowHelp(true)}>???</Button>
+        <Button onClick={() => setShowHelp(true)}>Ed, what the hell is this?</Button>
         <Button onClick={onSignOut}>
           Sign out
         </Button>

@@ -9,10 +9,13 @@ interface Props {
 const HelpModal: React.FC<Props> = ({ onClose }) => (
   <div className="HelpModal">
     <div className="HelpModal_content">
+      <h2>Chat boi</h2>
       <h3>A somewhat unusual chat app</h3>
       <p>
-        A proof of concept for a chat app utilising React + Firebase.
-        It updates messages in real time.
+        A proof of concept for a chat app utilising React + Firebase + Google sign in.
+        It updates messages in real time. Source code can be found
+        <a href="https://github.com/EdPutans/emoji-chat">here</a>
+        .
       </p>
       <br />
 
@@ -25,7 +28,9 @@ const HelpModal: React.FC<Props> = ({ onClose }) => (
       <p>
         The app
         <a href="https://www.npmjs.com/package/bad-words"> filters bad words </a>
-        , so posting profanity will result in the message getting replaced with a placeholder (or maybe this is just a trick to make you curse without the ability to remove your message. Who knows?)
+        , so posting profanity will result in the message getting replaced with a placeholder (or maybe this is just a trick to make you curse without the ability to remove your message. Who knows?).
+        <br />
+        Annoyingly, the package does sensor arguably harmless words like &quot;hell&quot;, but that&apos;s a compromise I&apos;m willing to live with.
       </p>
 
       <Button onClick={onClose}>Close</Button>
