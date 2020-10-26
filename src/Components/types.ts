@@ -3,6 +3,9 @@ export type MessageProp = {
     message: string
     userId: string
     userProfile?: string
-    createdAt: string
+    createdAt: {
+      nanoseconds: number
+      seconds: number
+    }
     displayName?: string
   }
