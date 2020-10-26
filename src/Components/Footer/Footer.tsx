@@ -4,17 +4,25 @@ import Input from '../Input/Input';
 import './styles.scss';
 
 interface Props {
-    onSubmit: (e, messge, callback) => void
+    // eslint-disable-next-line no-unused-vars
+    onSubmit: (e, message, callback) => any
+    onLogin: () => any
+    isLoggedIn?: boolean
 }
 
-const Footer: FC<Props> = ({ onSubmit }) => {
+const Footer: FC<Props> = ({ onSubmit, isLoggedIn, onLogin }) => {
   const [message, setMessage] = React.useState<string>('');
   const callback = () => setMessage('');
 
   return (
     <form className="Footer">
-      <Input onChange={(e) => setMessage(e.target.value)} value={message} />
-      <Button type="submit" onClick={(e) => onSubmit(e, message, callback)}>Post</Button>
+      {isLoggedIn
+        ? (
+          <>
+            <Input onChange={(e) => setMessage(e.target.value)} value={message} />
+            <Button type="submit" onClick={(e) => onSubmit(e, message, callback)}>Post</Button>
+          </>
+        ) : <Button onClick={onLogin}>Sign in using Google to use the chat</Button>}
     </form>
   );
 };
