@@ -3,7 +3,7 @@ import ChatItem from '../ChatItem/ChatItem';
 import { MessageProp } from '../types';
 import './styles.scss';
 
-type Props ={
+type Props = {
   messages: Array<MessageProp>
   userId?: string
 }
@@ -19,17 +19,15 @@ const Chat: FC<Props> = ({ messages, userId }) => {
   }, [messages]);
 
   return (
-    <>
-      <div className="Chat">
-        <div>
-          {messages?.length ? messages.map((message) => (
-            <ChatItem {...message} key={message.id} isCurrentUser={message.userId === userId} />
-          )) : <p>No messages yet for some reason.</p>}
-          <div ref={scrollMe} />
+    <div className="Chat">
+      <div>
+        {messages?.length ? messages.map((message) => (
+          <ChatItem {...message} key={message.id} isCurrentUser={message.userId === userId} />
+        )) : <p>No messages yet for some reason.</p>}
+        <div ref={scrollMe} />
 
-        </div>
       </div>
-    </>
+    </div>
   );
 };
 
