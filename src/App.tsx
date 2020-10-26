@@ -22,7 +22,6 @@ firebase.initializeApp(fireConfig);
 
 const Auth = firebase.auth();
 const firestore = firebase.firestore();
-
 const signIn = () => Auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 const signOut = () => Auth.signOut();
 
@@ -33,9 +32,9 @@ const App:React.FC = () => {
   });
   const [user] = useAuthState(Auth);
   const [emojis, setEmojis] = React.useState([]);
+
   const postMessage = (e, message, callback) => {
     e.preventDefault(); // <form /> is such a pos sometimes
-
     let messageToSend;
 
     if (NaughtyFilter.isProfane(message)) {
