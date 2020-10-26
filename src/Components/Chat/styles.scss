@@ -1,0 +1,13 @@
+.Chat{
+     padding: 20px;
+    &_row{
+        flex:1;
+        display: flex;
+        flex-direction: row;
+        // justify-content: flex-start;
+        &_myself{
+            @extend .Chat_row;
+            justify-content: flex-end;
+        }
+    }
+}

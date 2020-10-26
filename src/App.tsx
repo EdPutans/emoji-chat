@@ -9,49 +9,54 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import SignInButton from './Components/SignInButton';
-// import Chat from './Components/Chat';
+import Chat from './Components/Chat/Chat';
+import { MessageProp } from './Components/types';
+import fireConfig from './utils';
 
-firebase.initializeApp({
-  // todo: create ENV for all data
-});
+firebase.initializeApp(fireConfig);
 
 const Auth = firebase.auth();
 const firestore = firebase.firestore();
-firestore.settings({ timestampsInSnapshots: true });
 
 const signIn = () => Auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 const signOut = () => Auth.signOut();
 
-const App = () => {
+const App:React.FC = () => {
   const [user] = useAuthState(Auth);
+  const [message, setMessage] = React.useState<string>('');
+
+  const messagesRef = firestore.collection('messages');
+  const [messages] = useCollectionData<MessageProp>(messagesRef.orderBy('createdAt'), {
+    idField: 'id',
+  });
+
+  const postMessage = (e) => {
+    e.preventDefault(); // <form /> is such a pos sometimes
+
+    messagesRef.add({
+      message,
+      userId: Auth.currentUser.uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      userProfile: Auth.currentUser.photoURL,
+    }).then(() => setMessage(''));
+  };
 
   return (
     <div className="App">
       {user && <p> LOGGED IN!!! </p>}
       <SignInButton onClick={signIn} />
-      <Chat />
+      <Chat messages={messages} userId={Auth?.currentUser?.uid} />
       {user && (
       <>
         <button onClick={signOut}>SIGN OUT?</button>
       </>
       )}
-      <header />
+      <form>
+        <input onChange={(e) => setMessage(e.target.value)} value={message} />
+        <button type="submit" onClick={postMessage}>Post</button>
+      </form>
     </div>
   );
 };
 
 export default App;
-
-const Chat = () => {
-  const dumdum = useRef();
-  const messagesRef = firestore.collection('messages').get().then((snap) => {
-    const res = snap.docs.map((doc) => doc.data());
-    console.log(res);
-  });
-  // const getMessagesQuery = messagesRef.orderBy('createdAt').limit(50);
-  // const [messages] = useCollectionData(getMessagesQuery, {
-  // snapshotListenOptions: { includeMetadataChanges: true },
-  // });
-  // console.log(messages);
-  return <div />;
-};

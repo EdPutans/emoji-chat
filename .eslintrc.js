@@ -4,7 +4,7 @@ module.exports = {
         "es6": true
     },
     "extends": [
-        "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+        "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
         "airbnb",
     ],
@@ -27,7 +27,7 @@ module.exports = {
     ],
     "settings":{
         react: {
-            version: "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+            version: "detect"
         }
     },
     "rules": {
