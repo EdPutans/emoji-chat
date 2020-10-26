@@ -33,7 +33,7 @@ const HelpModal: React.FC<Props> = ({ onClose }) => (
           <br />
           Annoyingly, the package does sensor arguably harmless words like &quot;hell&quot;, but that&apos;s a compromise I&apos;m willing to live with.
         </p>
-        <a href="https://github.com/EdPutans/emoji-chat/issues">Feel free to open an issue if the app isn&apos;t working it they should</a>
+        <a href="https://github.com/EdPutans/emoji-chat/issues">Feel free to open an issue if the app isn&apos;t working as it should</a>
       </div>
       <Button onClick={onClose}>Close</Button>
     </div>
