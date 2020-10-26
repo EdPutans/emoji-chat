@@ -26,11 +26,15 @@ module.exports = {
         "@typescript-eslint"
     ],
     "settings":{
+        "import/resolver": {
+            "typescript": {} // this loads <rootdir>/tsconfig.json to eslint
+        },
         react: {
             version: "detect"
         }
     },
     "rules": {
+        "react/jsx-props-no-spreading": 0,
         "no-use-before-define": 0,
         "react/jsx-filename-extension": 0,
         "import/extensions": 0,

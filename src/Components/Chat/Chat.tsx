@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef, useEffect, FC } from 'react';
+import ChatItem from '../ChatItem/ChatItem';
 import { MessageProp } from '../types';
 import './styles.scss';
 
@@ -7,18 +8,24 @@ type Props ={
   userId?: string
 }
 
-const Chat: React.FC<Props> = ({ messages, userId }) => (
-  <div className="Chat">
-    {messages && messages.map((message) => (
-      <div className={`Chat_row${userId === message.userId ? '_myself' : ''}`}>
-        <p>
-          {message.userId}
-          -
-          {message.message}
-        </p>
-      </div>
-    ))}
-  </div>
-);
+const Chat: FC<Props> = ({ messages, userId }) => {
+  const scrollMe = useRef(undefined);
+
+  useEffect(() => {
+    if (scrollMe?.current) {
+       // eslint-disable-next-line no-unused-expressions
+       scrollMe?.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
+  return (
+    <div className="Chat">
+      {messages && messages.map((message) => (
+        <ChatItem {...message} isCurrentUser={message.userId === userId} />
+      ))}
+      <div ref={scrollMe} />
+    </div>
+  );
+};
 
 export default Chat;

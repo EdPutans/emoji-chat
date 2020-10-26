@@ -1,0 +1,13 @@
+.Header{
+    height: 50px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    &_button{
+        border: none;        padding: 10px;
+        border-radius: 5px;
+        margin: 0 10px;
+        color: #555;
+    }
+}

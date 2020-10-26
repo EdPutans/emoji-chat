@@ -1,17 +1,18 @@
-import React, { useRef } from 'react';
-import './App.css';
-
-import firebase from 'firebase/app';
+import React from 'react';
+// eslint-disable-next-line import/no-duplicates
 import 'firebase/firestore';
+// eslint-disable-next-line import/no-duplicates
 import 'firebase/auth';
-
+import firebase from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import fireConfig from './utils';
 
-import SignInButton from './Components/SignInButton';
+import './App.scss';
 import Chat from './Components/Chat/Chat';
 import { MessageProp } from './Components/types';
-import fireConfig from './utils';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
 
 firebase.initializeApp(fireConfig);
 
@@ -23,38 +24,34 @@ const signOut = () => Auth.signOut();
 
 const App:React.FC = () => {
   const [user] = useAuthState(Auth);
-  const [message, setMessage] = React.useState<string>('');
 
   const messagesRef = firestore.collection('messages');
   const [messages] = useCollectionData<MessageProp>(messagesRef.orderBy('createdAt'), {
     idField: 'id',
   });
 
-  const postMessage = (e) => {
+  const postMessage = (e, message, callback) => {
     e.preventDefault(); // <form /> is such a pos sometimes
 
     messagesRef.add({
       message,
-      userId: Auth.currentUser.uid,
+      displayName: user?.displayName,
+      userId: user?.uid,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      userProfile: Auth.currentUser.photoURL,
-    }).then(() => setMessage(''));
+      userProfile: user?.photoURL,
+    }).then(callback);
   };
 
+  if (!messages) {
+    return <h1>loading...</h1>;
+  }
   return (
     <div className="App">
-      {user && <p> LOGGED IN!!! </p>}
-      <SignInButton onClick={signIn} />
-      <Chat messages={messages} userId={Auth?.currentUser?.uid} />
-      {user && (
-      <>
-        <button onClick={signOut}>SIGN OUT?</button>
-      </>
-      )}
-      <form>
-        <input onChange={(e) => setMessage(e.target.value)} value={message} />
-        <button type="submit" onClick={postMessage}>Post</button>
-      </form>
+      <div className="App_content">
+        <Header onSignIn={signIn} onSignOut={signOut} isSignedIn={Boolean(Auth.currentUser)} />
+        <Chat messages={messages} userId={user?.uid} />
+        {user && <Footer onSubmit={postMessage} />}
+      </div>
     </div>
   );
 };
