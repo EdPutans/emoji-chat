@@ -69,7 +69,7 @@ const App:React.FC = () => {
       <div className="App_content">
         <Header onSignOut={signOut} isLoggedIn={Boolean(user)} />
         {(loadingValues || loadingEmojis) ? <h1>loading...</h1>
-          : <Chat messages={messages?.reverse()} userId={user?.uid} />}
+          : <Chat messages={messages && [...messages].reverse()} userId={user?.uid} />}
         <Footer onSubmit={postMessage} isLoggedIn={Boolean(user)} onLogin={signIn} />
       </div>
     </div>
