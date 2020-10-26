@@ -13,6 +13,7 @@ import Chat from './Components/Chat/Chat';
 import { MessageProp } from './Components/types';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
+import Button from './Components/Button/Button';
 
 firebase.initializeApp(fireConfig);
 
@@ -45,12 +46,19 @@ const App:React.FC = () => {
   if (!messages) {
     return <h1>loading...</h1>;
   }
+
   return (
     <div className="App">
+
       <div className="App_content">
-        <Header onSignIn={signIn} onSignOut={signOut} isSignedIn={Boolean(Auth.currentUser)} />
-        <Chat messages={messages} userId={user?.uid} />
-        {user && <Footer onSubmit={postMessage} />}
+        {user ? (
+          <>
+            <Header onSignOut={signOut} />
+            <Chat messages={messages} user={user} />
+            <Footer onSubmit={postMessage} />
+          </>
+        )
+          : <Button onClick={signIn}>Sign in using Google to use the chat</Button>}
       </div>
     </div>
   );

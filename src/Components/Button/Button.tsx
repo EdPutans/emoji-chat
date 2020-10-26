@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
+import './styles.scss';
 
-interface Props{
-    onClick: () => void
-    text: string
+type Props = {
+  // todo: take care of this
 }
 
-const Button: React.FC<Props> = ({ onClick, text }) => (
-  <button type="button" className="Button" onClick={onClick}>{text}</button>
+const Button: React.FC<ButtonHTMLAttributes<Props>> = ({ onClick, children, type = 'button' }) => (
+  // eslint-disable-next-line react/button-has-type
+  <button tabIndex={0} type={type} className="Button" onClick={onClick}>{children}</button>
 );
 
 export default Button;

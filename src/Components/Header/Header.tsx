@@ -1,17 +1,16 @@
 import React, { FC } from 'react';
+import Button from '../Button/Button';
 import './styles.scss';
 
 interface Props {
-    onSignIn: ()=>void
     onSignOut: ()=>void
-    isSignedIn: boolean
 }
 
-const Header:FC<Props> = ({ onSignIn, onSignOut, isSignedIn }) => (
+const Header:FC<Props> = ({ onSignOut }) => (
   <div className="Header">
-    <button type="button" className="Header_button" tabIndex={0} onClick={isSignedIn ? onSignOut : onSignIn}>
-      {isSignedIn ? 'Sign out' : 'Sign in using Google to use the chat'}
-    </button>
+    <Button onClick={onSignOut}>
+      Sign out
+    </Button>
   </div>
 );
 

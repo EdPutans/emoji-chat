@@ -1,3 +1,4 @@
+import { UserInfo } from 'firebase';
 import React, { useRef, useEffect, FC } from 'react';
 import ChatItem from '../ChatItem/ChatItem';
 import { MessageProp } from '../types';
@@ -6,9 +7,10 @@ import './styles.scss';
 type Props ={
   messages: Array<MessageProp>
   userId?: string
+  user: UserInfo
 }
 
-const Chat: FC<Props> = ({ messages, userId }) => {
+const Chat: FC<Props> = ({ messages, user }) => {
   const scrollMe = useRef(undefined);
 
   useEffect(() => {
@@ -19,12 +21,17 @@ const Chat: FC<Props> = ({ messages, userId }) => {
   }, [messages]);
 
   return (
-    <div className="Chat">
-      {messages && messages.map((message) => (
-        <ChatItem {...message} isCurrentUser={message.userId === userId} />
-      ))}
-      <div ref={scrollMe} />
-    </div>
+    <>
+      <div className="Chat">
+        <div>
+          {messages && messages.map((message) => (
+            <ChatItem {...message} key={message.id} isCurrentUser={message.userId === user.uid} />
+          ))}
+          <div ref={scrollMe} />
+
+        </div>
+      </div>
+    </>
   );
 };
 

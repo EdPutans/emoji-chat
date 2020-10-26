@@ -11,7 +11,10 @@ const ChatItem : React.FC<Props> = ({
 }) => (
   <div className={`ChatItem${isCurrentUser ? '_self' : ''}`}>
     <img className="ChatItem_img" alt={displayName} src={userProfile} />
-    <p className="ChatItem_text">{message}</p>
+    <div className={`ChatItem_textBubble${isCurrentUser ? '_self' : ''}`}>
+      <p className="ChatItem_name">{displayName}</p>
+      <p className="ChatItem_text">{message}</p>
+    </div>
   </div>
 );
 

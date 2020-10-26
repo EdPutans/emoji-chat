@@ -16,9 +16,3 @@ p{
   margin: 0;
 }
 
-input[type="button"]{
-  outline:none;
-}
-input[type="button"]:focus {
-  /* outline:none; */
-}

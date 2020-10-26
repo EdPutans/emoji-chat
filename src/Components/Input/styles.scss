@@ -1,0 +1,16 @@
+@import '../../theme.scss';
+
+.Input {
+    padding: 5px;
+    // box-sizing: border-box;
+    margin-right: 3px;
+    color: $textColor;
+    border: 1px solid $textColor;
+    border-radius: 5px;
+    &:hover{
+        outline: none;
+    }
+    &:focus{
+        outline: none;
+    }
+}

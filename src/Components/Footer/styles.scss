@@ -1,0 +1,11 @@
+@import '../../theme.scss';
+
+.Footer{
+    flex: 1;
+    background-color: $HeaderFooterBG;
+    padding: 10px;
+    display: flex;
+    & input{
+        flex: 1;
+    }
+}
