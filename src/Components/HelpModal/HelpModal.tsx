@@ -15,7 +15,7 @@ const HelpModal: React.FC<Props> = ({ onClose }) => (
         <p>
           A proof of concept for a chat app utilising React + Firebase + Google sign in.
           It updates messages in real time. Source code can be found
-          <a href="https://github.com/EdPutans/emoji-chat">here</a>
+          <a href="https://github.com/EdPutans/emoji-chat"> here </a>
           .
         </p>
         <br />
@@ -23,7 +23,7 @@ const HelpModal: React.FC<Props> = ({ onClose }) => (
         <p>
           It uses
           <a href="https://emoji-api.com/"> emoji API </a>
-          to fetch emojis and if a word in the text matches one fot those - the word will get replaced with an appropriate emoji.
+          to fetch emojis and if a word in the text matches one of those - the word will get replaced with an appropriate emoji.
         </p>
         <br />
         <p>
